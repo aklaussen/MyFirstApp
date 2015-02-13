@@ -2,16 +2,34 @@ package com.mycompany.myfirstapp;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.*;
+import android.widget.*;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    TextView textBox;
+    EditText editText;
+    SwipeView swipeText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        textBox = (TextView) findViewById(R.id.myTextView);
+        editText = (EditText) findViewById(R.id.text_box);
+        swipeText = (SwipeView) findViewById(R.id.mySwipeView);
+
+        final Button myButton = (Button) findViewById(R.id.myButton);
+        myButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textBox.setText(editText.getText());
+            }
+        });
+
     }
 
 
@@ -29,11 +47,14 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch(id) {
+            case (R.id.action_settings):
+                return true;
+            case (R.id.action_discard):
+                swipeText.discard();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }
